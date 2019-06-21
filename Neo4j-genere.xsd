@@ -4,84 +4,88 @@
 	elementFormDefault="qualified">
 
 <xsd:element name="database">
-<xsd:complexType>
-		<xsd:sequence>
-			<xsd:element name="name" />
-			<xsd:element name="number" type="xsd:integer" />
-			<xsd:element name="fields" type="field" minOccurs="1" maxOccurs="unbounded" /> 
-		</xsd:sequence>
-</xsd:complexType>
+  <xsd:complexType>
+    <xsd:sequence>
+		   <xsd:element name="name" />
+		   <xsd:element name="number" type="xsd:integer" />
+		   <xsd:element name="fields" type="field" minOccurs="1" maxOccurs="unbounded" /> 
+    </xsd:sequence>
+  </xsd:complexType>
 </xsd:element>
 
 <xsd:complexType name="field">
 		<xsd:choice maxOccurs="unbounded">
-			<xsd:element name="int" type="ints" />
-			<xsd:element name="string" type="strings" />
-			<xsd:element name="date" type="dates" />
-		</xsd:choice> 
-</xsd:complexType>
 
-<xsd:complexType name="ints">
-	<xsd:sequence>
-		<xsd:element name="name" />
-		<xsd:element name="optionnal" minOccurs="0"/>
-		<xsd:element name="space" type="intSpace" />
-	</xsd:sequence>
-</xsd:complexType>
+          <xsd:element name="int">
+            <xsd:complexType>
+	          <xsd:sequence>
+		        <xsd:element name="name" />
+		        <xsd:element name="optionnal" minOccurs="0"/>
+		        <xsd:element name="space" >
+                    <xsd:complexType>
+	                  <xsd:sequence>
+		                <xsd:choice>
+			              <xsd:element name="identifiant" nillable="true" />
+			              <xsd:element name="values">
+				            <xsd:complexType>
+					          <xsd:sequence>
+						        <xsd:element name="min" type="xsd:integer" />
+						        <xsd:element name="max" type="xsd:integer" />
+					          </xsd:sequence>
+				            </xsd:complexType>
+			              </xsd:element>
+		                </xsd:choice>
+	                 </xsd:sequence>
+                  </xsd:complexType>
+                </xsd:element>
+              </xsd:sequence>
+            </xsd:complexType>
+          </xsd:element>
 
-<xsd:complexType name="intSpace">
-	<xsd:sequence>
-		<xsd:choice>
-			<xsd:element name="identifiant" nillable="true" />
-			<xsd:element name="values">
-				<xsd:complexType>
-					<xsd:sequence>
-						<xsd:element name="min" type="xsd:integer" />
-						<xsd:element name="max" type="xsd:integer" />
-					</xsd:sequence>
-				</xsd:complexType>
-			</xsd:element>
-		</xsd:choice>
-	</xsd:sequence>
-</xsd:complexType>
-
-<xsd:complexType name="strings">
-	<xsd:sequence>
-		<xsd:element name="name" />
+		   <xsd:element name="string">
+             <xsd:complexType>
+	           <xsd:sequence>
+		         <xsd:element name="name" />
 				<xsd:element name="optionnal" minOccurs="0"/>
-		<xsd:element name="space" type="stringSpace" />
-	</xsd:sequence>
-</xsd:complexType>
+		        <xsd:element name="space" >
+                  <xsd:complexType>
+	                <xsd:sequence>
+		              <xsd:choice>
+				        <xsd:element name="long">
+					      <xsd:complexType>
+						    <xsd:sequence>
+							  <xsd:element name="min" type="xsd:integer" />
+							  <xsd:element name="max" type="xsd:integer" />
+					        </xsd:sequence>
+					      </xsd:complexType>
+				        </xsd:element>
+				        <xsd:element name="regular" type="xsd:string" />
+		              </xsd:choice>
+	                </xsd:sequence>
+                  </xsd:complexType>
+                </xsd:element>  
+               </xsd:sequence>
+             </xsd:complexType>
+           </xsd:element>
 
-<xsd:complexType name="stringSpace">
-	<xsd:sequence>
-		<xsd:choice>
-				<xsd:element name="long">
-					<xsd:complexType>
-						<xsd:sequence>
-							<xsd:element name="min" type="xsd:integer" />
-							<xsd:element name="max" type="xsd:integer" />
-					</xsd:sequence>
-					</xsd:complexType>
-				</xsd:element>
-				<xsd:element name="regular" type="xsd:string" />
-		</xsd:choice>
-	</xsd:sequence>
-</xsd:complexType>
+           <xsd:element name="date">
+              <xsd:complexType>
+	            <xsd:sequence>
+		          <xsd:element name="name" />
+		          <xsd:element name="optionnal" minOccurs="0"/>
+		          <xsd:element name="space" >
+                      <xsd:complexType>
+	                    <xsd:sequence>
+					      <xsd:element name="after" type="xsd:date" />
+					      <xsd:element name="before" type="xsd:date" />
+	                    </xsd:sequence>
+                      </xsd:complexType>
+                  </xsd:element>
+	            </xsd:sequence>
+              </xsd:complexType>
+           </xsd:element>
 
-<xsd:complexType name="dates">
-	<xsd:sequence>
-		<xsd:element name="name" />
-		<xsd:element name="optionnal" minOccurs="0"/>
-		<xsd:element name="space" type="dateSpace" />
-	</xsd:sequence>
-</xsd:complexType>
-
-<xsd:complexType name="dateSpace">
-	<xsd:sequence>
-					<xsd:element name="after" type="xsd:date" />
-					<xsd:element name="before" type="xsd:date" />
-	</xsd:sequence>
+        </xsd:choice>
 </xsd:complexType>
 
 </xsd:schema>

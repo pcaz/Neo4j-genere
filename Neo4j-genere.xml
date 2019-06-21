@@ -30,10 +30,10 @@
 			</space>
 		</date>
 		<string>
-			<name>twitter</name>
+			<name>email</name>
 			<optionnal>50</optionnal>
 			<space>
-				<regular>eval(name)@twitter</regular>
+				<regular>eval(name)@example.com</regular>
 			</space>
 		</string>
 	</fields>
