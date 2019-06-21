@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<database xmlns="http://Neo4j_genere/xml" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="file:///home/pascaz10/eclipse-workspace/Neo4j-genere/Neo4j-genere.xsd">
+
+	<name>Person</name>
+	<number>100</number>
+	<fields>
+		<int>
+			<name>id</name>
+			<space>
+				<identifiant/>
+			</space>
+		</int>
+		<string>
+			<name>name</name>
+			<space>
+				<long>
+					<min>3</min>
+					<max>8</max>
+				</long>
+			</space>
+		</string>
+		<date>
+			<name>birthDate</name>
+			
+			<space>
+				<after>1970-01-01</after>
+				<before>1990-01-01</before>
+			</space>
+		</date>
+		<string>
+			<name>twitter</name>
+			<optionnal>50</optionnal>
+			<space>
+				<regular>eval(name)@twitter</regular>
+			</space>
+		</string>
+	</fields>
+</database>
