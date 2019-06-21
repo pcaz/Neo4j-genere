@@ -40,7 +40,7 @@ public class Main {
 		}
 		
 		for(int i=0;i<nb;i++) {
-		
+			
 		Node field=null;
 		StringBuffer line= new StringBuffer();;
 		impl.reset();
@@ -67,12 +67,10 @@ public class Main {
 		
 		} while(field != null);
 		
-		if(!isEntete) {
-
-			entete = impl.getEntete().toString();
-			writer.println(entete);
-			isEntete=true;
-			 }
+		if(!isEntete) {	
+			writer.println(impl.getHeader());
+			isEntete = true;
+		}
 
 		
 		writer.println(line.substring(0, line.length() - 1));

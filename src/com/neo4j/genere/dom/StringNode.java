@@ -48,35 +48,46 @@ public class StringNode {
 					System.out.println("incorrect min/max to string"+Name);
 					System.exit(2);
 				}
-			Ret = newString(min,max);
+			Ret = newString(min,max,Name); // setEntry of semantic is done in newString
+		
 			break;
 		case "regular":
 				RegularExpression rg=new RegularExpression();
 				String val=first.getTextContent();
 				Ret=rg.getString(first.getTextContent());
+				Semantic.getInstance().setEntry(Name,Ret);
 				break;
 			
 	    }
 		
-		Semantic.getInstance().setEntry(Name,Ret);
-		Semantic.getInstance().setHeader(Name,":STRING");		
+	
+			
 		return Ret;
 	}
 
-	private String newString(int min, int max) {
+	private String newString(int min, int max, String name) {
 		
 		int length=0;
+		boolean done=false;
+		String str;
+		
 		do{
 			length = (int)((Math.round(Math.random() * max)));
 		} while (length < min);
 		
 		String chars = "abcdefghijklmnopqrstuvwxyz";
 		
-		String str = new Random().ints(length, 0, chars.length())	
+		do {
+			str = new Random().ints(length, 0, chars.length())	
 		                         .mapToObj(i -> "" + chars.charAt(i))
 		                         .collect(Collectors.joining());
 		
 		
+			if(!Semantic.getInstance().isEntry(str)) {
+				Semantic.getInstance().setEntry(name,str);
+				done = true;
+			}
+		} while(!done);
 		
 		return str;
 	}

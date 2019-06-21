@@ -15,7 +15,7 @@ public class RegularExpression {
         String endExpr;
         String value;
         
-		int indEval=expr.indexOf("eval(", 0);
+		int indEval=expr.indexOf("eval(");
 		if(indEval != -1) {
 			beginExpr= expr.substring(0,indEval);
 			newExp = expr.substring(indEval+("eval(".length()));

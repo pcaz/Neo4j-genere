@@ -37,7 +37,7 @@ public class IntNode {
 		case "identifiant":
 				ind++;
 				Ret = ((Integer)ind).toString();
-				Semantic.getInstance().setHeader(Name,"id");
+				
 				break;
 		case "values":
 			Integer min=0;
@@ -55,7 +55,7 @@ public class IntNode {
 			if(min <= max) {int val = (int) Math.round(Math.random() * ( max - min ));
 			Ret=((Integer)val).toString();}
 			else {Ret = "0";}
-			Semantic.getInstance().setHeader(Name,":INT");
+	
 			break;
 			
 		}

@@ -150,12 +150,9 @@ public class DatabaseImpl implements DatabaseInterface {
 	}
 	
 	@Override
-	public String getEntete() {
-		return Semantic.getInstance().getEntete();
-	}
 	
-	public String setHeader() {
-		return "";
+	public String getHeader() {
+		return Semantic.getInstance().getHeader(noeuds);
 		
 	}
 }

@@ -12,6 +12,6 @@ public interface DatabaseInterface {
 	public String getInt(Node field);
 	public String getString(Node field);
 	public String getDate(Node field);
-	public String getEntete();
+	public String getHeader();
 
 }

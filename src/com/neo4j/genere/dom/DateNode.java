@@ -44,7 +44,7 @@ public class DateNode {
 	    
 		
 		Semantic.getInstance().setEntry(Name,Ret);
-		Semantic.getInstance().setHeader(Name,":DATE");
+	
 		return Ret;
 	}
 
