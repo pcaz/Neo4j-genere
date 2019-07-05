@@ -4,7 +4,7 @@
 	xsi:schemaLocation="file:///home/pascaz10/eclipse-workspace/Neo4j-genere/Neo4j-genere.xsd">
 
 	<name>Person</name>
-	<number>100</number>
+	<number>1353</number>
 	<fields>
 		<int>
 			<name>id</name>
@@ -15,10 +15,7 @@
 		<string>
 			<name>name</name>
 			<space>
-				<long>
-					<min>3</min>
-					<max>8</max>
-				</long>
+				<iterate/>
 			</space>
 		</string>
 		<date>

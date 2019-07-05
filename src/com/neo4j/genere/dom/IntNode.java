@@ -52,7 +52,7 @@ public class IntNode {
 			else
 			{Ret = "0";}
 	
-			if(min <= max) {int val = (int) Math.round(Math.random() * ( max - min ));
+			if(min <= max) {int val = min + (int)(Math.random() * ((max - min) + 1));
 			Ret=((Integer)val).toString();}
 			else {Ret = "0";}
 	
@@ -64,4 +64,7 @@ public class IntNode {
 		return Ret;
 	}
 
+	public void reset() {
+		
+	}
 }

@@ -1,12 +1,15 @@
 package com.neo4j.genere.dom;
 
 import java.util.Random;
+import java.util.Date;
 import java.util.stream.Collectors;
 
 import org.w3c.dom.Node;
 import com.neo4j.genere.dom.Util;
 
 public class StringNode {
+	
+	private static int num=0;
 	
 	public String getNodeGenere(Node field) {
 		
@@ -57,6 +60,9 @@ public class StringNode {
 				Ret=rg.getString(first.getTextContent());
 				Semantic.getInstance().setEntry(Name,Ret);
 				break;
+		case "iterate":
+			   Ret= Iterate();
+			   Semantic.getInstance().setEntry(Name,Ret);
 			
 	    }
 		
@@ -64,7 +70,11 @@ public class StringNode {
 			
 		return Ret;
 	}
-
+	
+	
+	public void reset() {
+		num=0;
+	}
 	private String newString(int min, int max, String name) {
 		
 		int length=0;
@@ -78,7 +88,7 @@ public class StringNode {
 		String chars = "abcdefghijklmnopqrstuvwxyz";
 		
 		do {
-			str = new Random().ints(length, 0, chars.length())	
+			str = new Random(new Date().getTime()).ints(length, 0, chars.length())	
 		                         .mapToObj(i -> "" + chars.charAt(i))
 		                         .collect(Collectors.joining());
 		
@@ -91,4 +101,116 @@ public class StringNode {
 		
 		return str;
 	}
+	
+	private String Iterate() {
+	
+		int val;
+
+		String chars = "abcdefghijklmnopqrstuvwxyz";
+		
+		StringBuffer str = new StringBuffer();
+		
+		
+		// d'abord, on calcule le nombre de bits
+		
+		val = num;
+		
+		int nbits=0;
+		int vv;
+		int pow=1;
+		
+		if(num<chars.length()) {
+			nbits=1;
+			pow=1;
+		}
+		
+		if((num>= chars.length()) && (num < (chars.length()*chars.length()+chars.length()))){
+			nbits=2;
+			pow = chars.length();
+		}
+		
+		if((num >= (chars.length()*chars.length()+chars.length())) && (num < chars.length()*chars.length()*chars.length() + chars.length()*chars.length()+chars.length())){
+			nbits=3;
+			pow = chars.length()*chars.length();
+					
+		}
+		
+/*		vv=val;
+			
+		do {			
+			nbits++;
+			vv= vv/chars.length();
+		} while (vv>0);
+
+	    
+
+		// nbits est le nombre de byte du resultat
+		int pow =1; 
+
+		for(int i=1; i<nbits;i++) {
+			 pow = pow * chars.length();
+		}
+
+		//les 26 premiers nombres ne sont pas comptabilisees dans le nombre de bits
+		// 0..25->1
+		// 26-801  -> 2
+		
+		if((nbits>2) && ((pow-val)<chars.length())){
+			nbits--;
+			pow=pow/chars.length();
+			}
+*/		
+	
+/*		
+		int v=val/pow;
+		str.append(chars.charAt(v));
+		pow=pow/chars.length();
+		v=val-pow;
+*/		
+		int val1=0;
+		
+		
+		
+		do {
+			if (pow==1){
+				val1=val;
+			} 
+			else {val1 = val/pow-1;
+			}
+			
+			try {
+			str.append(chars.charAt(val1));
+			}catch (Exception e){
+				System.out.println("num="+ num+ " val1="+val1+" pow="+pow);
+				e.printStackTrace();
+			}
+			
+			val = val - (val/pow)*pow;
+			pow = pow / chars.length();
+			nbits--;
+		} while( nbits >0);
+
+		num++;
+		return str.toString();
+		
+/*		int n=0;
+		do {
+			int v = val/ pow;
+			str.append(chars.charAt(v));
+			val = val - pow;
+			pow =pow / chars.length();
+			
+			n++;
+		} while ( val>0);
+		
+		
+		return str.toString();
+*/
+		
+	}
+	
+		
 }
+	
+	
+

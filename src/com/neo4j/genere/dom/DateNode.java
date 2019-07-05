@@ -6,7 +6,7 @@ import java.time.LocalDate;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class DateNode {
-	
+
 	Util util;
 	public String getNodeGenere(Node field) {
 		
@@ -14,7 +14,8 @@ public class DateNode {
         util = new Util();		
 		util.removeText(field.getChildNodes());
 		String Name=field.getFirstChild().getTextContent();
-		
+
+// if optionnal field, evaluate		
 		int opt;
 		if(((opt = util.getOptionnal(field)) != 100)){
 			if(Math.round(Math.random() * 100) > opt ) {
@@ -22,10 +23,11 @@ public class DateNode {
 			}	
 		}
 		
-		Node space = util.getSpace(field);
-		
+// go to space field		
+		Node space = util.getSpace(field);			
 		util.removeText(space.getChildNodes());
-		
+
+// get date field		
 		Node first = space.getFirstChild();
 		String name=first.getNodeName();
 		switch(name) {
@@ -40,22 +42,25 @@ public class DateNode {
 			break;
 		}
 		
-			
-	    
-		
-		Semantic.getInstance().setEntry(Name,Ret);
+	// manage semantic list (it's a singleton)		
+	Semantic.getInstance().setEntry(Name,Ret);
 	
 		return Ret;
 	}
 
-	String getDate(String after, String before) {
+	private String getDate(String after, String before) {
 		
+		// random date in range
 		
 		long afterDate = LocalDate.parse(after).toEpochDay();
 		long beforeDate = LocalDate.parse(before).toEpochDay();
-		long randomDay = ThreadLocalRandom.current().nextLong(afterDate, beforeDate);
+		long randomDay = afterDate + (int)(Math.random() * ((beforeDate - afterDate) + 1));
 	    LocalDate randomDate = LocalDate.ofEpochDay(randomDay);
 	    return randomDate.toString();
 	    
+	}
+	
+	public void reset() {
+		
 	}
 }

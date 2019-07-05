@@ -35,7 +35,7 @@ public class Main {
 	// open file
 		
 		try {
-			writer = new PrintWriter("/home/pascaz10/eclipse-workspace/Neo4j-genere/"+db+".csv");
+			writer = new PrintWriter(db+".csv");
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
