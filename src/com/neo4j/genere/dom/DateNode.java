@@ -15,20 +15,21 @@ public class DateNode {
 		util.removeText(field.getChildNodes());
 		String Name=field.getFirstChild().getTextContent();
 
-// if optionnal field, evaluate		
+
+		// if optionnal field, evaluate		
 		int opt;
-		if(((opt = util.getOptionnal(field)) != 100)){
+		if(((opt = util.getOptionnal(field.getFirstChild())) != 100)){
 			if(Math.round(Math.random() * 100) > opt ) {
 				return "";
 			}	
 		}
-		
 // go to space field		
 		Node space = util.getSpace(field);			
 		util.removeText(space.getChildNodes());
 
 // get date field		
 		Node first = space.getFirstChild();
+		
 		String name=first.getNodeName();
 		switch(name) {
 		case "after":

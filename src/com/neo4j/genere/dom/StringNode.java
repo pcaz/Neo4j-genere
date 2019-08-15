@@ -21,7 +21,7 @@ public class StringNode {
 		String Name=field.getFirstChild().getTextContent();
 		
 		int opt;
-		if(((opt = util.getOptionnal(field)) != 100)){
+		if(((opt = util.getOptionnal(field.getFirstChild())) != 100)){
 			if(Math.round(Math.random() * 100) > opt ) {
 				return "";
 			}	
@@ -32,8 +32,8 @@ public class StringNode {
 		util.removeText(space.getChildNodes());
 		
 		Node first = space.getFirstChild();
+		
 		String name=first.getNodeName();
-	
 		switch(name) {
 		case "long":
 				Integer min=0;

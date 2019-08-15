@@ -3,6 +3,7 @@ package com.neo4j.genere.dom;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
@@ -10,20 +11,14 @@ public class Util {
 	
 	public int getOptionnal(Node field) {
 
-		NodeList ls=field.getChildNodes();
-		
-		removeText(ls);
-		
-		Node found = null;
-		
-		for(int i=0; i < ls.getLength();i++) {
-			if(ls.item(i).getNodeName().equals("optionnal")) {
-				found=ls.item(i);
-				break;
-			}
-		}
-		if (found == null) { return 100; }
-		else { return Integer.parseInt(found.getTextContent());}  
+		 int opt=100;
+		 
+		 String optionnal= ((Element) field).getAttribute("optionnal");
+		 
+		if (!optionnal.equals("")) {
+			opt=Integer.parseInt(optionnal);
+		}  
+		return opt;
 	}
 	
 	public Node getSpace(Node field) {

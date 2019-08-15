@@ -15,7 +15,7 @@
 		<string>
 			<name>name</name>
 			<space>
-				<iterate fixed="false"/>
+				<iterate fixed="true"/>
 			</space>
 		</string>
 		<date>
@@ -27,8 +27,7 @@
 			</space>
 		</date>
 		<string>
-			<name>email</name>
-			<optionnal>50</optionnal>
+			<name optionnal="50">email</name>
 			<space>
 				<regular>eval(name)@example.com</regular>
 			</space>

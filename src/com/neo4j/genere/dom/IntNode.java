@@ -21,14 +21,14 @@ public class IntNode {
 		util.removeText(field.getChildNodes());
 		String Name=field.getFirstChild().getTextContent();
 		
-		optionnal = util.getOptionnal(field); 
-		space = util.getSpace(field);
 		int opt;
-		if(((opt = util.getOptionnal(field)) != 100)){
+		if(((opt = util.getOptionnal(field.getFirstChild())) != 100)){
 			if(Math.round(Math.random() * 100) > opt ) {
 				return "";
 			}	
 		}
+		space = util.getSpace(field);
+		
 		util.removeText(space.getChildNodes());
 		
 		Node first = space.getFirstChild();
