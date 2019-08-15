@@ -5,11 +5,13 @@ import java.util.Date;
 import java.util.stream.Collectors;
 
 import org.w3c.dom.Node;
+import org.w3c.dom.Element;
 import com.neo4j.genere.dom.Util;
 
 public class StringNode {
 	
 	private static int num=0;
+	private static boolean fixedLenghtToIterate=true;
 	
 	public String getNodeGenere(Node field) {
 		
@@ -61,6 +63,10 @@ public class StringNode {
 				Semantic.getInstance().setEntry(Name,Ret);
 				break;
 		case "iterate":
+			// default is fixed="true", "false" is attribute in XML
+			   String fixed= ((Element) first).getAttribute("fixed");
+			   if(fixed.equals("false")) {fixedLenghtToIterate=false;}
+			   
 			   Ret= Iterate();
 			   Semantic.getInstance().setEntry(Name,Ret);
 			
@@ -104,113 +110,57 @@ public class StringNode {
 	
 	private String Iterate() {
 	
-		int val;
-
-		String chars = "abcdefghijklmnopqrstuvwxyz";
+		String car="abcdefghijklmnopqrstuvwxyz";
 		
-		StringBuffer str = new StringBuffer();
+		StringBuffer res=new StringBuffer();
+		int val=num;
+		int val1=num;
 		
+		if(fixedLenghtToIterate) {val1=val+26+676+17576;}
 		
-		// d'abord, on calcule le nombre de bits
-		
-		val = num;
-		
-		int nbits=0;
-		int vv;
-		int pow=1;
-		
-		if(num<chars.length()) {
-			nbits=1;
-			pow=1;
-		}
-		
-		if((num>= chars.length()) && (num < (chars.length()*chars.length()+chars.length()))){
-			nbits=2;
-			pow = chars.length();
-		}
-		
-		if((num >= (chars.length()*chars.length()+chars.length())) && (num < chars.length()*chars.length()*chars.length() + chars.length()*chars.length()+chars.length())){
-			nbits=3;
-			pow = chars.length()*chars.length();
-					
-		}
-		
-/*		vv=val;
-			
-		do {			
-			nbits++;
-			vv= vv/chars.length();
-		} while (vv>0);
-
-	    
-
-		// nbits est le nombre de byte du resultat
-		int pow =1; 
-
-		for(int i=1; i<nbits;i++) {
-			 pow = pow * chars.length();
-		}
-
-		//les 26 premiers nombres ne sont pas comptabilisees dans le nombre de bits
-		// 0..25->1
-		// 26-801  -> 2
-		
-		if((nbits>2) && ((pow-val)<chars.length())){
-			nbits--;
-			pow=pow/chars.length();
-			}
-*/		
+		// compute number of bits of result, must be 1,2 or 3
 	
-/*		
-		int v=val/pow;
-		str.append(chars.charAt(v));
-		pow=pow/chars.length();
-		v=val-pow;
-*/		
-		int val1=0;
+	
+	int nbytes=0;
 		
+	if(val1<26) nbytes=1;
+	if((26<= val1) && (val1 < 26+676)) nbytes = 2;
+	if( (26+676 <= val1) && (val1 < 26+476+17576)) nbytes = 3;
+	if( (26+476+17576 <= val1) && (val1 < 26+676+17576+456976)) nbytes=4;
+	if (val1 > 26+676+17576+456976)  throw new IllegalArgumentException ("Maximum value is 475254 or 456976 in fixedLength ! ");
 		
-		
-		do {
-			if (pow==1){
-				val1=val;
-			} 
-			else {val1 = val/pow-1;
-			}
-			
-			try {
-			str.append(chars.charAt(val1));
-			}catch (Exception e){
-				System.out.println("num="+ num+ " val1="+val1+" pow="+pow);
-				e.printStackTrace();
-			}
-			
-			val = val - (val/pow)*pow;
-			pow = pow / chars.length();
-			nbits--;
-		} while( nbits >0);
+	val=val1;
+	
+	switch (nbytes) {
+	case 4:
+		val = (val1 - 26 - 676);
+		val = val1 / 17576;
+		res.append(car.substring(val-1,val));
+		val1= val1 - (val * 17576);	
+	case 3:
+		val = (val1 - 26);
+		val = val / 676;
+		res.append(car.substring(val-1,val));
+		val1= val1 - (val * 676);
+	case 2:	
+		val=val1 / 26;
+		res.append(car.substring(val-1,val));
+		val= val1 % 26;
+	case 1:
+		res.append(car.substring(val,val+1));
+	}
+				
 
-		num++;
-		return str.toString();
+        num++;		
+		return res.toString();
 		
-/*		int n=0;
-		do {
-			int v = val/ pow;
-			str.append(chars.charAt(v));
-			val = val - pow;
-			pow =pow / chars.length();
-			
-			n++;
-		} while ( val>0);
-		
-		
-		return str.toString();
-*/
 		
 	}
-	
 		
 }
+	
+		
+
 	
 	
 

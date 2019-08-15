@@ -59,8 +59,15 @@
 					        </xsd:sequence>
 					      </xsd:complexType>
 				        </xsd:element>
-				        <xsd:element name="regular" type="xsd:string" />
-				        <xsd:element name="iterate" nillable="true"/>
+				        <xsd:element name="regular" nillable="true" type="xsd:string"  />
+				        <xsd:element name="iterate" nillable="true">
+				        	<xsd:complexType>
+				             	<xsd:attribute name="fixed" type="xsd:boolean"/>
+				            </xsd:complexType>
+				        </xsd:element>
+				             	
+		
+				             	
 		              </xsd:choice>
 	                </xsd:sequence>
                   </xsd:complexType>
