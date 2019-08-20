@@ -34,22 +34,33 @@ public class DatabaseImpl implements DatabaseInterface {
 	
 	Util util;
 	
+	String schemaName;
+	
 	@Override
-	public void initialize(String file) {
+	public void dataBaseInitialyse(String file) {
+		schemaName = System.getProperty("user.dir")+System.getProperty("file.separator")+file+".xsd";
+	}
+	@Override
+	public void dataSourceInitialyse(String file) {
 		
 		Document document = null;
 		
 		DocumentBuilderFactory factory = null;
 		
 		String fileName= System.getProperty("user.dir")+System.getProperty("file.separator")+file+".xml";
-		String schemaName = System.getProperty("user.dir")+System.getProperty("file.separator")+file+".xsd";
+		
+		
+		// validate the xml file against the schema
 		
 		if(!XMLValidator.validate(schemaName,fileName)) {
 			System.out.println("Problem: "+fileName+" is not compliant with the schema : "+ schemaName);
 			System.exit(0);
 		}
 		
-		 try{
+		
+		// ok, try to manage the xml file
+		
+	    try{
 		    	factory = DocumentBuilderFactory.newInstance();
 		    	DocumentBuilder builder = factory.newDocumentBuilder();
 		    	document = builder.parse(fileName);		
@@ -58,7 +69,8 @@ public class DatabaseImpl implements DatabaseInterface {
 		    	System.out.println("File :"+fileName+" not found");
 		    	System.exit(0);
 		    }
-		 racine = document.getDocumentElement();
+		
+	    racine = document.getDocumentElement();
 		 noeuds = racine.getChildNodes();
 		 
 		 util = new Util();
@@ -67,12 +79,17 @@ public class DatabaseImpl implements DatabaseInterface {
 		//Semantic is a Singleton	 
 		Semantic.getInstance().setDatabaseName(getDatabaseName());
 		
-		// initialisation des interprÃ©teur
+		// initialisation des interpréteurs
 		
 		GetInt = new IntNode();
 		GetString = new StringNode();
 		GetDate = new DateNode();
 	}
+		
+		
+		
+		
+	
 		
 	
 	
@@ -130,9 +147,14 @@ public class DatabaseImpl implements DatabaseInterface {
 		
 	}
 	@Override
-	public void reset() {
+    public void	resetLine() {
 		Semantic.getInstance().reset();
 		fields = null;
+	}
+	public void resetDataSource() {
+		GetInt.resetDataSource();
+		GetDate.resetDataSource();
+		GetString.resetDataSource();
 	}
 	@Override
 	public String getInt(Node field) {

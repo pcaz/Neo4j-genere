@@ -77,8 +77,12 @@ public class StringNode {
 		return Ret;
 	}
 	
+	// reset parser
+	public void resetLine() {
+		
+	}
 	
-	public void reset() {
+	public void resetDataSource() {
 		num=0;
 	}
 	private String newString(int min, int max, String name) {

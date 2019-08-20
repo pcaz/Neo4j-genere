@@ -61,7 +61,10 @@ public class DateNode {
 	    
 	}
 	
-	public void reset() {
+	public void resetLine() {
+		
+	}
+	public void resetDataSource() {
 		
 	}
 }

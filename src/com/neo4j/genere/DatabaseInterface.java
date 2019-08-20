@@ -4,8 +4,11 @@ import org.w3c.dom.Node;
 
 public interface DatabaseInterface {
 	
-	//initialze
-	public void initialize(String file);
+	//initialize
+	public void dataBaseInitialyse(String fileName);
+	
+	public void dataSourceInitialyse(String fileName);
+	
 	// get Database name
 	public String getDatabaseName();
 	// get number of items
@@ -13,7 +16,9 @@ public interface DatabaseInterface {
 	// next field and initialze parser
 	public Node getNextField();
 	// reset parser
-	public void reset();
+	public void resetLine();
+	// reset parser
+	public void resetDataSource();
 	// get header of file
 	public String getHeader();
 	// get int
@@ -22,6 +27,8 @@ public interface DatabaseInterface {
 	public String getString(Node field);
 	// get date
 	public String getDate(Node field);
+
+	
 	
 
 }

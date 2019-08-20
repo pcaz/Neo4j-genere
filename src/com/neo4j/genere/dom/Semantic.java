@@ -1,5 +1,6 @@
 package com.neo4j.genere.dom;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -18,12 +19,12 @@ public class Semantic {
 	
 	private static Semantic instance;
 	private Map<String,String> semantic;
-	private List<String> entete;
+	private ArrayList<String> entete;
 	private String DatabaseName;
 	
 	private Semantic() {
 		semantic = new TreeMap<String,String>();
-		entete= new LinkedList<String>();
+		entete= new ArrayList<String>();
 	}
 	
 	public static Semantic getInstance(){
@@ -62,14 +63,14 @@ public class Semantic {
 
 	NodeList fields=null;
 	NodeList field=null;
-	
+	entete.clear();
 	for(int i=0;i < noeuds.getLength(); i++) {
 		if(noeuds.item(i).getNodeName().equals("fields")) {
 			fields = noeuds.item(i).getChildNodes();
 			break;
 		}
 	}
-	
+	;
 
 String val;
 String name;

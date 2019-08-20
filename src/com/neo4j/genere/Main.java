@@ -13,27 +13,64 @@ import java.util.Iterator;
 public class Main {
 
 	static int no=1;
-	static String method="dom";
+	
 	static StringBuffer line;
 	static boolean isHeader = false;
 	static PrintWriter writer;
-	
+	static enum Type  {Entity, Relation};
 	
 	public static void main(String[] args) {
-		
+	
+	Type type;
+	
+	int nbargs=args.length;
+	
+	if((nbargs == 0)) {
+		Usage();
+		return;
+	}
+	if(args[0].equals("-v")) {
+		System.out.println(Constant.version);
+		return;
+	}
+	else if (args[0].equals("-entity")) {
+		type = Type.Entity;
+
+	}
+	
+	else if(args[0].equals("-relation")) {
+		type = Type.Relation;
+
+	}
+	
+	else {
+		Usage();
+		return;
+	}
+	
+	
+	
 		
 	// get an implementation	
  		DatabaseFactory databaseFactory = new DatabaseFactory();
-		DatabaseInterface impl=databaseFactory.getDatabase(method);
-	// initiliaze (with validating xml)	
-		impl.initialize("Neo4j-genere");
+		DatabaseInterface impl=databaseFactory.getDatabase(Constant.method);
+	// initiliaze schema	
+		
+	impl.dataBaseInitialyse("Neo4j-genere-v"+Constant.version);
+	
+	
+	for(int a=1; a<args.length; a++) {
+	// new file	
+	String fileName = args[a];
+	
+	impl.dataSourceInitialyse(fileName);	
 
-	// values fot the new file
+	// values for the new file
 		
 		String db= impl.getDatabaseName();
 		Integer nb = impl.getDatabaseNumber();
 	// open file
-		
+		System.out.println("Write "+db+".csv");
 		try {
 			writer = new PrintWriter(db+".csv");
 		} catch (FileNotFoundException e) {
@@ -53,7 +90,7 @@ public class Main {
 			
 		Node field=null;
 		StringBuffer line= new StringBuffer();;
-		impl.reset();
+		impl.resetLine();
 		do {
 			field = impl.getNextField();
 			if(field!=null) {
@@ -81,9 +118,22 @@ public class Main {
 	// write line	
 		writer.println(line.substring(0, line.length() - 1));
 	}
+
 	// close file	
 	writer.close();
+	System.out.println("done");
+	
+	impl.resetDataSource();
+	isHeader=false;
+	}
 	}
 	
+	static void Usage() {
+		
+		System.out.println("Neo4J-genere -v :version");
+		System.out.println("Neo4J-genere -entity file [files..] : Entity files");
+		System.out.println("Neo4J-genere -relation file [files...] Relation files");
+		
+	}
 
 }

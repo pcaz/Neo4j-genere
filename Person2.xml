@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entite xmlns="http://Neo4j_genere/xml" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="file:///home/pascaz10/eclipse-workspace/Neo4j-genere/Neo4j-genere.xsd">
+
+	<name>Person2</name>
+	<number>1353</number>
+	<fields>
+		<int>
+			<name>id</name>
+			<space>
+				<identifiant/>
+			</space>
+		</int>
+		<string>
+			<name>name</name>
+			<space>
+				<iterate fixed="false"/>
+			</space>
+		</string>
+		<date>
+			<name>birthDate</name>
+			
+			<space>
+				<after>1970-01-01</after>
+				<before>1990-01-01</before>
+			</space>
+		</date>
+		<string>
+			<name optionnal="10">email</name>
+			<space>
+				<regular>eval(name)@example.com</regular>
+			</space>
+		</string>
+	</fields>
+</entite>

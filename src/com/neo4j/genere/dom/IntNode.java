@@ -64,7 +64,11 @@ public class IntNode {
 		return Ret;
 	}
 
-	public void reset() {
+	public void resetDataSource() {
+		ind=0;
+		
+	}
+	public void resetLine() {
 		
 	}
 }
